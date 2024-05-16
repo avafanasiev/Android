@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p .qodana/code-coverage
           rm -rf .qodana/code-coverage/**
-          cp --parents -r **/build/reports/kover/reportDebug.bin .qodana/code-coverage
+          rsync -R **/build/reports/kover/reportDebug.bin .qodana/code-coverage
       
       - name: Push coverage
         run: |

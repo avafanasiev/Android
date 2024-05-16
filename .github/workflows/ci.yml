@@ -1,5 +1,6 @@
-name: CI Checks
-
+name: Generate coverage for Qodana
+permissions:
+  contents: write
 on:
   push:
     branches:
@@ -45,9 +46,11 @@ jobs:
           name: gradle-coverage-data.zip
           path: .qodana/code-coverage
     
-      - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@v2024.1
-        env:
-          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-  
+      - name: Push coverage
+        run: |
+          git config --global user.name 'Coverage workflow'
+          git config --global user.email 'coverage-workflow@users.noreply.github.com'
+          git add git add .qodana/code-coverage/\*
 
+          git commit -m "Update coverage"
+          git push

@@ -19,7 +19,6 @@ plugins {
     id 'kotlin-android'
     id 'com.google.devtools.ksp' version "$ksp_version"
     id 'com.squareup.anvil'
-    id("org.jetbrains.kotlinx.kover") version "0.7.2"
 }
 
 apply from: "$rootProject.projectDir/gradle/android-library.gradle"

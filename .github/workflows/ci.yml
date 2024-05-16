@@ -33,19 +33,14 @@ jobs:
       - name: Tests with coverage
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :statistics:koverVerifyDebug
+          arguments: koverBinaryReportDebug
           
       - name: Create coverage-data directory and copy contents
         run: |
           mkdir -p .qodana/code-coverage
-          cp -R statistics/build/kover/bin-reports/* .qodana/code-coverage/
+          rm -rf .qodana/code-coverage/**
+          cp --parents -r **/build/reports/kover/reportDebug.bin .qodana/code-coverage
       
-      - name: Archive coverage data
-        uses: actions/upload-artifact@v2
-        with:
-          name: gradle-coverage-data.zip
-          path: .qodana/code-coverage
-    
       - name: Push coverage
         run: |
           git config --global user.name 'Coverage workflow'

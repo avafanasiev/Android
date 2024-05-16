@@ -40,6 +40,8 @@ plugins {
     id 'org.jetbrains.dokka' version "$dokka_version"
     id 'com.osacky.fulladle' version "$fladle_version"
     id 'org.jmailen.kotlinter' version "$kotlinter_version" apply false
+    id("org.jetbrains.kotlinx.kover") version "0.8.0"
+
 }
 
 allprojects {
@@ -52,11 +54,19 @@ allprojects {
     }
 }
 
+
+dependencies {
+    allprojects.each { Project prj ->
+        kover(project(prj.path))
+    }
+}
+
 subprojects {
 
     if (project.name.endsWith("api")) {
         apply plugin: 'org.jetbrains.dokka'
     }
+    apply plugin: 'org.jetbrains.kotlinx.kover'
 
     String[] allowAndroidTestsIn = ["app", "sync-lib", "httpsupgrade-impl"]
     if (!allowAndroidTestsIn.contains(project.name)) {

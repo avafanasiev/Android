@@ -8,14 +8,9 @@ on:
       - develop
     paths-ignore:
       - '**.md'
-  pull_request:
-    paths-ignore:
-      - '**.md'
-      - '.github/**'
-
 jobs:
   checks:
-    name: Unit tests
+    name: Update coverage
     runs-on: ubuntu-latest
 
     steps:

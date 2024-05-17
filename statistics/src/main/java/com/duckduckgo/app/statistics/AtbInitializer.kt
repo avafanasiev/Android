@@ -80,6 +80,12 @@ class AtbInitializer @Inject constructor(
         }
     }
 
+    private fun someUntestedMethod() {
+        if (true) {
+            println("Untested")
+        }
+    }
+
     override fun onPrivacyConfigDownloaded() {
         if (!statisticsDataStore.hasInstallationStatistics) {
             // First time we initializeAtb

@@ -30,17 +30,17 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Tests with coverage
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: koverBinaryReportDebug
-          
       - name: Create coverage-data directory and copy contents
         run: |
           mkdir -p .qodana/code-coverage
           rm -rf .qodana/code-coverage/**
-          rsync -R **/build/reports/kover/reportDebug.bin .qodana/code-coverage
-      
+
+      - name: Tests with coverage
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: koverBinaryReportDebug copyCoverage
+
+
       - name: Push coverage
         run: |
           git config --global user.name 'Coverage workflow'

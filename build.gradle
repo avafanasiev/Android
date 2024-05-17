@@ -1,3 +1,5 @@
+import java.nio.file.Files
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
@@ -51,6 +53,20 @@ allprojects {
     }
     configurations.all {
         resolutionStrategy.force 'org.objenesis:objenesis:2.6'
+    }
+}
+
+tasks.register('copyCoverage') {
+    Directory projectDirectory = layout.projectDirectory
+    doLast {
+        var dir = projectDirectory.getAsFile()
+        var counter = 1
+        dir.eachFileRecurse { file ->
+            if (file.name == 'reportDebug.bin') {
+                Files.copy(file.toPath(), dir.toPath().resolve(".qodana/code-coverage/report_${counter}.ic"))
+                counter++
+            }
+        }
     }
 }
 

@@ -73,6 +73,15 @@ class AtbInitializer @Inject constructor(
 
         initializeAtb()
     }
+    
+    fun process(x: Int?) {
+      val isNull = x == null
+      if (!isNull) {
+        if (x != null) {} // condition is always true
+      } else {
+        println(x!!) // !! operator will always fail
+      }
+    }
 
     private fun initializeAtb() {
         if (statisticsDataStore.hasInstallationStatistics) {

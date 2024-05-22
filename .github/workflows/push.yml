@@ -1,23 +1,22 @@
-name: Generate coverage for Qodana
+name: Push checks
 permissions:
   contents: write
 on:
-  pull_request:
+  push:
+    branches:
+      - main
+      - develop
     paths-ignore:
       - '**.md'
-      - '.github/**'
-
 jobs:
   checks:
-    name: Checks
+    name: Qodana
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
-          fetch-depth: 0  # a full history is required for pull request analysis
           submodules: recursive
 
       - name: Set up JDK 17
@@ -36,7 +35,7 @@ jobs:
         with:
           arguments: koverBinaryReportDebug copyCoverage
 
-      - name: 'Qodana Scan'
+      - name: Qodana Scan
         uses: JetBrains/qodana-action@v2024.1
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

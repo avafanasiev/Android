@@ -1,3 +1,4 @@
 failureConditions:
   testCoverageThresholds:
     fresh: 50 
+enablePackageSearch: true
